@@ -1,4 +1,3 @@
-// src/components/Header.tsx
 import React from 'react';
 import { Moon, Sun, BookOpen, Heart, Clock, Star } from 'lucide-react';
 
@@ -85,12 +84,12 @@ export function Header({ isDarkMode, toggleDarkMode, activeTab, setActiveTab }: 
 
         {/* Mobile Navigation */}
         <div className="md:hidden pb-4">
-          <div className="flex justify-start items-center space-x-4">
+          <div className="grid grid-cols-3 gap-y-2 gap-x-1">
             {navItems.map(({ id, label, icon: Icon }) => (
               <button
                 key={id}
                 onClick={() => setActiveTab(id)}
-                className={`flex flex-col items-center justify-center p-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap ${
+                className={`flex flex-col items-center justify-center p-2 rounded-lg font-medium transition-all duration-200 ${
                   activeTab === id
                     ? isDarkMode
                       ? 'bg-indigo-600 text-white'

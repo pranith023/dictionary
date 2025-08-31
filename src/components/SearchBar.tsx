@@ -114,8 +114,8 @@ export function SearchBar({ query, onQueryChange, onSearch, isDarkMode, onAddToH
         isDarkMode 
           ? 'bg-gray-800/50 backdrop-blur-xl border-gray-600' 
           : 'bg-white/70 backdrop-blur-xl border-gray-200'
-      } border rounded-2xl transition-all duration-300 hover:shadow-lg focus-within:shadow-xl focus-within:scale-[1.02]`}>
-        <div className="flex items-center px-4 py-3">
+      } border rounded-2xl transition-all duration-300 hover:shadow-lg focus-within:shadow-xl`}>
+        <div className="flex flex-wrap items-center px-4 py-3 sm:flex-nowrap">
           <Search className={`h-5 w-5 ${
             isDarkMode ? 'text-gray-400' : 'text-gray-500'
           }`} />

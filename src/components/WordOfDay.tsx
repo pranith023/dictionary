@@ -23,12 +23,12 @@ export function WordOfDay({ word, isDarkMode, onWordClick }: WordOfDayProps) {
         isDarkMode 
           ? 'bg-gradient-to-br from-purple-800/50 to-indigo-800/50 backdrop-blur-xl border-purple-600/30' 
           : 'bg-gradient-to-br from-purple-50 to-indigo-50 backdrop-blur-xl border-purple-200'
-      } border rounded-2xl p-8 hover:shadow-2xl relative overflow-hidden`}
+      } border rounded-2xl p-4 sm:p-8 hover:shadow-2xl relative overflow-hidden`}
     >
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-4 right-4">
-          <Star className="h-32 w-32 text-current" />
+          <Star className="h-20 w-20 md:h-32 md:w-32 text-current" />
         </div>
       </div>
 
