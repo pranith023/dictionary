@@ -1,3 +1,4 @@
+// src/App.tsx
 import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { SearchBar } from './components/SearchBar';
@@ -170,6 +171,134 @@ function App() {
       </div>
     );
   }
+  
+  const renderContent = () => {
+    if (isLoading) {
+      return (
+        <div className="text-center py-16">
+          <svg className="animate-spin h-10 w-10 text-indigo-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <p className={`mt-4 text-lg ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+            Fetching word data...
+          </p>
+        </div>
+      );
+    }
+    
+    switch (activeTab) {
+      case 'home':
+        return (
+          <>
+            <div className="text-center mb-8">
+              <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${
+                isDarkMode ? 'text-white' : 'text-gray-900'
+              }`}>
+                Discover the Power of Words
+              </h1>
+              <p className={`text-xl ${
+                isDarkMode ? 'text-gray-400' : 'text-gray-600'
+              }`}>
+                Premium dictionary with instant search, pronunciations, and translations
+              </p>
+            </div>
+            <SearchBar
+              query={query}
+              onQueryChange={setQuery}
+              onSearch={handleSearch}
+              isDarkMode={isDarkMode}
+              onAddToHistory={addToHistory}
+            />
+            {wordOfTheDay && (
+              <div className="mb-12 mt-12">
+                <WordOfDay
+                  word={wordOfTheDay}
+                  isDarkMode={isDarkMode}
+                  onWordClick={handleWordClick}
+                />
+              </div>
+            )}
+            {trendingWords.length > 0 && (
+              <TrendingWords
+                words={trendingWords}
+                isDarkMode={isDarkMode}
+                favoriteWords={preferences.favoriteWords}
+                onToggleFavorite={toggleFavorite}
+                onWordClick={handleWordClick}
+              />
+            )}
+          </>
+        );
+      case 'search':
+        return (
+          <>
+            <div className="text-center mb-8">
+              <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${
+                isDarkMode ? 'text-white' : 'text-gray-900'
+              }`}>
+                Discover the Power of Words
+              </h1>
+              <p className={`text-xl ${
+                isDarkMode ? 'text-gray-400' : 'text-gray-600'
+              }`}>
+                Premium dictionary with instant search, pronunciations, and translations
+              </p>
+            </div>
+            <SearchBar
+              query={query}
+              onQueryChange={setQuery}
+              onSearch={handleSearch}
+              isDarkMode={isDarkMode}
+              onAddToHistory={addToHistory}
+            />
+            <div className="mt-12">
+              <SearchResults
+                results={searchResults}
+                query={query}
+                isDarkMode={isDarkMode}
+                favoriteWords={preferences.favoriteWords}
+                onToggleFavorite={toggleFavorite}
+                onWordClick={handleWordClick}
+              />
+            </div>
+          </>
+        );
+      case 'favorites':
+        return (
+          <FavoritesTab
+            favoriteWords={favoriteWordObjects}
+            isDarkMode={isDarkMode}
+            onToggleFavorite={toggleFavorite}
+            onWordClick={handleWordClick}
+          />
+        );
+      case 'history':
+        return (
+          <HistoryTab
+            searchHistory={preferences.searchHistory}
+            isDarkMode={isDarkMode}
+            onSearch={handleSearch}
+            onClearHistory={clearHistory}
+          />
+        );
+      case 'community':
+        return <CommunityTab isDarkMode={isDarkMode} />;
+      case 'blog':
+        return <BlogTab isDarkMode={isDarkMode} />;
+      case 'progress':
+        return (
+          <GamificationTab
+            isDarkMode={isDarkMode}
+            userLevel={userStats.level}
+            userPoints={userStats.points}
+            userStreak={userStats.streak}
+          />
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className={`flex flex-col min-h-screen transition-colors duration-300 ${
@@ -183,120 +312,9 @@ function App() {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
-
       <main className="flex-1 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Search Section */}
-        <div className="mb-12">
-          <div className="text-center mb-8">
-            <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${
-              isDarkMode ? 'text-white' : 'text-gray-900'
-            }`}>
-              Discover the Power of Words
-            </h1>
-            <p className={`text-xl ${
-              isDarkMode ? 'text-gray-400' : 'text-gray-600'
-            }`}>
-              Premium dictionary with instant search, pronunciations, and translations
-            </p>
-          </div>
-
-          <SearchBar
-            query={query}
-            onQueryChange={setQuery}
-            onSearch={handleSearch}
-            isDarkMode={isDarkMode}
-            onAddToHistory={addToHistory}
-          />
-        </div>
-
-        {isLoading ? (
-          <div className="text-center py-16">
-            <svg className="animate-spin h-10 w-10 text-indigo-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            <p className={`mt-4 text-lg ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-              Fetching word data...
-            </p>
-          </div>
-        ) : (
-          <>
-            {/* Content based on active tab */}
-            {activeTab === 'home' && !query && (
-              <>
-                {wordOfTheDay && (
-                  <div className="mb-12">
-                    <WordOfDay
-                      word={wordOfTheDay}
-                      isDarkMode={isDarkMode}
-                      onWordClick={handleWordClick}
-                    />
-                  </div>
-                )}
-    
-                {trendingWords.length > 0 && (
-                  <TrendingWords
-                    words={trendingWords}
-                    isDarkMode={isDarkMode}
-                    favoriteWords={preferences.favoriteWords}
-                    onToggleFavorite={toggleFavorite}
-                    onWordClick={handleWordClick}
-                  />
-                )}
-              </>
-            )}
-
-            {activeTab === 'search' && (
-              <SearchResults
-                results={searchResults}
-                query={query}
-                isDarkMode={isDarkMode}
-                favoriteWords={preferences.favoriteWords}
-                onToggleFavorite={toggleFavorite}
-                onWordClick={handleWordClick}
-              />
-            )}
-
-            {activeTab === 'favorites' && (
-              <FavoritesTab
-                favoriteWords={favoriteWordObjects}
-                isDarkMode={isDarkMode}
-                onToggleFavorite={toggleFavorite}
-                onWordClick={handleWordClick}
-              />
-            )}
-
-            {activeTab === 'history' && (
-              <HistoryTab
-                searchHistory={preferences.searchHistory}
-                isDarkMode={isDarkMode}
-                onSearch={handleSearch}
-                onClearHistory={clearHistory}
-              />
-            )}
-
-            {activeTab === 'community' && (
-              <CommunityTab isDarkMode={isDarkMode} />
-            )}
-
-            {activeTab === 'blog' && (
-              <BlogTab isDarkMode={isDarkMode} />
-            )}
-
-            
-
-            {activeTab === 'progress' && (
-              <GamificationTab
-                isDarkMode={isDarkMode}
-                userLevel={userStats.level}
-                userPoints={userStats.points}
-                userStreak={userStats.streak}
-              />
-            )}
-          </>
-        )}
+        {renderContent()}
       </main>
-
       <Footer isDarkMode={isDarkMode} />
     </div>
   );

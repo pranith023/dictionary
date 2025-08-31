@@ -1,3 +1,4 @@
+// src/components/Header.tsx
 import React from 'react';
 import { Moon, Sun, BookOpen, Heart, Clock, Star } from 'lucide-react';
 
@@ -13,7 +14,6 @@ export function Header({ isDarkMode, toggleDarkMode, activeTab, setActiveTab }: 
     { id: 'home', label: 'Home', icon: BookOpen },
     { id: 'community', label: 'Community', icon: Heart },
     { id: 'blog', label: 'Blog', icon: Clock },
-    // { id: 'api', label: 'API', icon: Star },
     { id: 'progress', label: 'Progress', icon: Star },
     { id: 'favorites', label: 'Favorites', icon: Heart },
     { id: 'history', label: 'History', icon: Clock }
@@ -85,7 +85,7 @@ export function Header({ isDarkMode, toggleDarkMode, activeTab, setActiveTab }: 
 
         {/* Mobile Navigation */}
         <div className="md:hidden pb-4">
-          <div className="flex justify-between items-center space-x-1 overflow-x-auto">
+          <div className="flex justify-start items-center space-x-4">
             {navItems.map(({ id, label, icon: Icon }) => (
               <button
                 key={id}
