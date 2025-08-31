@@ -1,3 +1,4 @@
+// src/components/WordCard.tsx
 import React, { useState } from 'react';
 import { Heart, Volume2, Copy, ExternalLink, BookmarkPlus } from 'lucide-react';
 import { Word } from '../types/dictionary';
@@ -45,7 +46,7 @@ export function WordCard({ word, isDarkMode, isFavorite, onToggleFavorite, onWor
           : 'bg-white/70 backdrop-blur-xl border-gray-200 hover:bg-white/90'
       } border rounded-2xl p-6 hover:shadow-xl`}
     >
-      <div className="flex items-start justify-between mb-4">
+      <div className="flex items-start justify-between mb-4 flex-wrap">
         <div className="flex-1">
           <div className="flex items-center space-x-3 mb-2">
             <h3 className={`text-2xl font-bold ${
@@ -84,7 +85,7 @@ export function WordCard({ word, isDarkMode, isFavorite, onToggleFavorite, onWor
           </div>
         </div>
 
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 mt-2 sm:mt-0">
           <button
             onClick={(e) => {
               e.stopPropagation();
